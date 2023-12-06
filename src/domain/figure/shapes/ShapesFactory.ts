@@ -1,38 +1,34 @@
+import { ShapeData } from "../Figure";
+
 export class ShapesFactory {
-    public CreateCircle(): SVGElement {
+
+    public createCircle(shapeData: ShapeData): SVGElement {
         const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        circle.setAttribute("cx", this.getRandomInt(50, 950).toString());
-        circle.setAttribute("cy", this.getRandomInt(50, 550).toString());
-        circle.setAttribute("r", this.getRandomInt(15, 35).toString());
-        circle.setAttribute("stroke", "black");
+        circle.setAttribute("cx", shapeData.coords.x.toString());
+        circle.setAttribute("cy", shapeData.coords.y.toString());
+        circle.setAttribute("r", (shapeData.dimensions.width / 2).toString());
 
         return circle;
     }
 
-    public CreateRectangle(): SVGElement {
+    public createRectangle(shapeData: ShapeData): SVGElement {
         const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-        rect.setAttribute("x", this.getRandomInt(50, 950).toString());
-        rect.setAttribute("y", this.getRandomInt(50, 550).toString());
-        rect.setAttribute("width", this.getRandomInt(15, 50).toString());
-        rect.setAttribute("height", this.getRandomInt(15, 50).toString());
-        rect.setAttribute("stroke", "black");
+        rect.setAttribute("x", (shapeData.coords.x - (shapeData.dimensions.width / 2)).toString());
+        rect.setAttribute("y", (shapeData.coords.y - (shapeData.dimensions.height / 2)).toString());
+        rect.setAttribute("width", shapeData.dimensions.width.toString());
+        rect.setAttribute("height", shapeData.dimensions.height.toString());
 
         return rect;
     }
 
-    public CreateSquare(): SVGElement {
+    public createSquare(shapeData: ShapeData): SVGElement {
         const square = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-        const length = this.getRandomInt(15, 50).toString();
-        square.setAttribute("x", this.getRandomInt(50, 950).toString());
-        square.setAttribute("y", this.getRandomInt(50, 550).toString());
-        square.setAttribute("width", length);
-        square.setAttribute("height", length);
+        square.setAttribute("x", (shapeData.coords.x - (shapeData.dimensions.width / 2)).toString());
+        square.setAttribute("y", (shapeData.coords.y - (shapeData.dimensions.width / 2)).toString());
+        square.setAttribute("width", shapeData.dimensions.width.toString());
+        square.setAttribute("height", shapeData.dimensions.width.toString());
         square.setAttribute("stroke", "black");
 
         return square;
-    }
-
-    public getRandomInt(min: number, max: number): number {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 }

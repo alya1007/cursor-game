@@ -8,9 +8,5 @@ export class AvoidState extends FigureState<Figure> {
     }
 
     addEventListener() {
-        console.log('AvoidState: addEventListener')
-        this.context!.shape?.addEventListener('click', () => {
-            this.context!.game.transitionTo(new GameOverState())
-        });
     }
 }

@@ -1,4 +1,4 @@
-import { Figure } from "./Figure";
+import { Figure, ShapeData } from "./Figure";
 import { AvoidState } from "./states/AvoidState";
 import { CollectState } from "./states/CollectState";
 import { FigureType } from "./Figure";
@@ -7,16 +7,16 @@ import { FigureState } from "./states/FigureState";
 
 export class FigureFactory {
   private shapesFactory: ShapesFactory = new ShapesFactory();
-  public createAvoidableFigure(): Figure {
-    return this.createFigure(new AvoidState(), FigureType.Avoid, this.shapesFactory.CreateCircle());
+  public createAvoidableFigure(shapeData: ShapeData): Figure {
+    return this.createFigure(new AvoidState(), FigureType.Avoid, this.shapesFactory.createCircle(shapeData));
   }
 
-  public createCollectableFigure(): Figure {
-    return this.createFigure(new CollectState(), FigureType.Collect, this.shapesFactory.CreateRectangle());
+  public createCollectableFigure(shapeData: ShapeData): Figure {
+    return this.createFigure(new CollectState(), FigureType.Collect, this.shapesFactory.createRectangle(shapeData));
   }
 
-  public createChangeableFigure(): Figure {
-    const figure: Figure = this.createFigure(new AvoidState(), FigureType.Change, this.shapesFactory.CreateSquare());
+  public createChangeableFigure(shapeData: ShapeData): Figure {
+    const figure: Figure = this.createFigure(new AvoidState(), FigureType.Change, this.shapesFactory.createSquare(shapeData));
     this.setupToggleStateTimer(figure);
     return figure;
   }
@@ -42,7 +42,7 @@ export class FigureFactory {
   }
 
 
-  public getRandomInt(min: number, max: number): number {
+  private getRandomInt(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 

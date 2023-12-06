@@ -7,6 +7,11 @@ export enum FigureType {
   Change,
 }
 
+export type ShapeData = {
+  coords: { x: number, y: number },
+  dimensions: { width: number, height: number },
+}
+
 export class Figure {
   private _state: FigureState<Figure> | null = null;
   public type: FigureType;
