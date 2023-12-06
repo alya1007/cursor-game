@@ -1,15 +1,25 @@
 import { Player } from "../player/Player";
+import { GameOngoingState } from "./states/GameOngoingState";
 import { GameState } from "./states/GameState";
 
 export class Game {
-    private _state: GameState<Game>;
-    public player: Player;
+    private _state: GameState<Game> | null = null;
+    private static instance: Game;
+    public player: Player | null = null;
 
-    constructor(name: string, state: GameState<Game>) {
-        this.player = new Player(name);
-        this._state = state;
-        this.transitionTo(state);
-        this._state?.onCreate();
+    constructor() {
+    }
+
+    public static getInstance(): Game {
+        if (!Game.instance) {
+            Game.instance = new Game();
+        }
+
+        return Game.instance;
+    }
+
+    public setPlayer(player: Player): void {
+        this.player = player;
     }
 
     public transitionTo(state: GameState<Game>): void {

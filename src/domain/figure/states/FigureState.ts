@@ -5,4 +5,6 @@ export abstract class FigureState<T> {
     }
 
     public setColor(): void { };
+
+    public addEventListener(): void { };
 }

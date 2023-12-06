@@ -1,3 +1,4 @@
+import { Game } from "../game/Game";
 import { FigureState } from "./states/FigureState";
 
 export enum FigureType {
@@ -11,7 +12,7 @@ export class Figure {
   public type: FigureType;
   public shape: SVGElement | null;
   public color: string | null = null;
-
+  public game: Game;
 
   constructor(state: FigureState<Figure>, type: FigureType, shape: SVGElement | null) {
     this.type = type;
@@ -19,6 +20,7 @@ export class Figure {
     this._state?.setColor();
     this.shape?.setAttribute('fill', this.color!);
     this.transitionTo(state);
+    this.game = Game.getInstance();
   }
 
 

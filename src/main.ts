@@ -1,18 +1,22 @@
 import './style.css'
 
-import { FigureFactory } from "./domain/figure/FigureFactory";
 import { Game } from './domain/game/Game';
+import { Player } from './domain/player/Player';
 import { GameOngoingState } from './domain/game/states/GameOngoingState';
 
-const figureFactory = new FigureFactory();
 
 const playerNameInput = document.getElementById('playerName') as HTMLInputElement;
 const startButton = document.getElementById('start') as HTMLButtonElement;
 
+const playerInstance = Player.getInstance();
+
 startButton.addEventListener('click', () => {
   const playerName = playerNameInput.value.trim();
+  playerInstance.setName(playerName);
   if (playerName !== '') {
-    new Game(playerName, new GameOngoingState());
+    const game = new Game();
+    game.setPlayer(playerInstance);
+    game.transitionTo(new GameOngoingState());
   } else {
     alert('Please enter a player name.');
   }

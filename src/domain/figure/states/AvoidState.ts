@@ -1,3 +1,4 @@
+import { GameOverState } from "../../game/states/GameOverState";
 import { Figure } from "../Figure";
 import { FigureState } from "./FigureState";
 
@@ -6,6 +7,10 @@ export class AvoidState extends FigureState<Figure> {
         this.context!.color = 'red';
     }
 
-    isClicked() {
+    addEventListener() {
+        console.log('AvoidState: addEventListener')
+        this.context!.shape?.addEventListener('click', () => {
+            this.context!.game.transitionTo(new GameOverState())
+        });
     }
 }
