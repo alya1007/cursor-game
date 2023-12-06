@@ -14,16 +14,18 @@ export class GameOngoingState extends GameState<Game> {
     private readonly CELL_HEIGHT: number = 200;
 
     onCreate(): void {
-        console.log('GameOngoingState: onCreate');
         const shapeDataArray = this.generateShapeData();
-        console.log('shapeDataArray: ', shapeDataArray);
-
         const figureFactory = new FigureFactory();
 
-        for (let i = 0; i < shapeDataArray.length; i++) {
-            const collectableFigure = figureFactory.createChangeableFigure(shapeDataArray[i]);
+        for (let i = 0; i < shapeDataArray.length; i += 3) {
+            const changeableFigure = figureFactory.createChangeableFigure(shapeDataArray[i]);
+            changeableFigure.render();
+
+            const avoidableFigure = figureFactory.createAvoidableFigure(shapeDataArray[i + 1]);
+            avoidableFigure.render();
+
+            const collectableFigure = figureFactory.createCollectableFigure(shapeDataArray[i + 2]);
             collectableFigure.render();
-            console.log('collectableFigure: ', collectableFigure);
         }
     }
 
