@@ -4,9 +4,9 @@ import { Game } from "../Game";
 import { GameState } from "./GameState";
 
 export class GameOngoingState extends GameState<Game> {
-    private readonly WIDTH_MIN: number = 10;
+    private readonly WIDTH_MIN: number = 20;
     private readonly WIDTH_MAX: number = 50;
-    private readonly HEIGHT_MIN: number = 10;
+    private readonly HEIGHT_MIN: number = 20;
     private readonly HEIGHT_MAX: number = 30;
     private readonly GRID_COLUMNS: number = 5;
     private readonly GRID_ROWS: number = 3;

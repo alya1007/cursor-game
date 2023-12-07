@@ -37,7 +37,7 @@ export class FigureFactory {
 
   private toggleState(figure: Figure): void {
     if (figure.type === FigureType.Change) {
-      figure.transitionTo(figure.GetState().constructor === AvoidState ? new CollectState() : new AvoidState());
+      figure.transitionTo(figure.getState().constructor === AvoidState ? new CollectState() : new AvoidState());
     }
   }
 
