@@ -1,8 +1,10 @@
+import { Figure } from "../figure/Figure";
 import { Player } from "../player/Player";
 import { GameState } from "./states/GameState";
 
 export class Game {
     private _state: GameState<Game> | null = null;
+    public figures: Figure[] = [];
     private static instance: Game;
     public player: Player | null = null;
     public canvasContext: CanvasRenderingContext2D;

@@ -17,7 +17,6 @@ export class Figure {
   public type: FigureType;
   public shape: SVGElement;
   public color: string | null = null;
-  public game: Game;
   public shapeData: ShapeData = {
     coords: { x: 0, y: 0 },
     dimensions: { width: 0, height: 0 },
@@ -29,7 +28,6 @@ export class Figure {
     this._state?.setColor();
     this.shape?.setAttribute('fill', this.color!);
     this.transitionTo(state);
-    this.game = Game.getInstance();
     this.shapeData.coords = this.getCoords();
     this.shapeData.dimensions = this.getDimensions();
   }

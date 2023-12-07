@@ -5,8 +5,4 @@ export abstract class FigureState<T> {
     }
 
     public setColor(): void { };
-
-    public getClicked(mouseX: number, mouseY: number): boolean {
-        return false;
-    }
 }

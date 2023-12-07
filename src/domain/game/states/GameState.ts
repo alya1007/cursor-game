@@ -1,5 +1,10 @@
 export abstract class GameState<T> {
-    protected context: T | null = null;
+    protected context: T;
+
+    constructor(context: T) {
+        this.context = context;
+    }
+
     public SetContext(context: T): void {
         this.context = context;
     }

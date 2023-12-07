@@ -3,7 +3,7 @@ import { GameState } from "./GameState";
 
 export class GameOverState extends GameState<Game> {
     onCreate(): void {
-        console.log('GameOverState')
+        this.context?.canvasContext.clearRect(0, 0, 900, 600);
     }
     public onCanvasClick(mouseX: number, mouseY: number): void {
 

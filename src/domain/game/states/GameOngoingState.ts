@@ -1,6 +1,8 @@
 import { Figure, ShapeData } from "../../figure/Figure";
 import { FigureFactory } from "../../figure/FigureFactory";
+import { AvoidState } from "../../figure/states/AvoidState";
 import { Game } from "../Game";
+import { GameOverState } from "./GameOverState";
 import { GameState } from "./GameState";
 
 export class GameOngoingState extends GameState<Game> {
@@ -32,10 +34,13 @@ export class GameOngoingState extends GameState<Game> {
             collectableFigure.render();
             this.figures.push(collectableFigure);
         }
+
+        this.context!.figures = this.figures;
     }
 
 
     public onCanvasClick(mouseX: number, mouseY: number): void {
+        let figureClicked = null;
         for (const figure of this.figures) {
             if (figure.shape.tagName === 'rect') {
                 if (
@@ -45,42 +50,24 @@ export class GameOngoingState extends GameState<Game> {
                     mouseY <= figure.shapeData.coords.y + figure.shapeData.dimensions.height
 
                 ) {
-                    console.log('Clicked on a rectangle figure:', figure);
-                    return;
+                    figureClicked = figure;
                 }
             } else if (figure.shape.tagName === 'circle') {
                 const distance = Math.sqrt(
                     Math.pow(mouseX - figure.shapeData.coords.x, 2) + Math.pow(mouseY - figure.shapeData.coords.y, 2)
                 );
                 if (distance <= figure.shapeData.dimensions.width / 2) {
-                    console.log('Clicked on a circle figure:', figure);
-                    return;
+                    figureClicked = figure;
                 }
             }
 
         }
-        console.log('Clicked on empty space.');
+        const figureState = figureClicked?.getState();
+        if (figureState instanceof AvoidState)
+            debugger;
+        this.context?.transitionTo(new GameOverState(Game.getInstance()));
     }
 
-    private getClickedRectangle(mouseX: number, mouseY: number, figure: Figure): boolean {
-        const rectX = figure.shapeData.coords.x - (figure.shapeData.dimensions.width / 2);
-        const rectY = figure.shapeData.coords.y - (figure.shapeData.dimensions.height / 2);
-        if (mouseX > rectX && mouseX < rectX + figure.shapeData.dimensions.width && mouseY > rectY && mouseY < rectY + figure.shapeData.dimensions.height) {
-            return true;
-        }
-        return false;
-    }
-
-    private getClickedCircle(mouseX: number, mouseY: number, figure: Figure): boolean {
-        const circleX = figure.shapeData.coords.x
-        const circleY = figure.shapeData.coords.y
-        const distance = Math.sqrt(((mouseX - circleX) * (mouseX - circleX)) + ((mouseY - circleY) * (mouseY - circleY)));
-
-        if (distance < figure.shapeData.dimensions.width / 2) {
-            return true;
-        }
-        return false;
-    }
 
 
     private generateShapeData(): ShapeData[] {
@@ -104,7 +91,6 @@ export class GameOngoingState extends GameState<Game> {
         }
 
         return shapesData;
-
     }
 
     private getRandomInt(min: number, max: number): number {
