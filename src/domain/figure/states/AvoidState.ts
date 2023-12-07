@@ -6,16 +6,11 @@ export class AvoidState extends FigureState<Figure> {
         this.context!.color = 'red';
     }
 
-    addEventListener() {
-        const canvas = document.getElementById('playField') as HTMLCanvasElement;
-        canvas.addEventListener('click', (event) => {
-            console.log('click event')
-            const rect = canvas.getBoundingClientRect();
-            const mouseX = event.clientX - rect.left;
-            const mouseY = event.clientY - rect.top;
-            this.context!.shape.tagName === 'circle' ? this.getClickedCircle(mouseX, mouseY) : this.getClickedRectangle(mouseX, mouseY);
-        });
+    getClicked(mouseX: number, mouseY: number): boolean {
+        const clicked = this.context!.shape.tagName === 'rect' ? this.getClickedRectangle(mouseX, mouseY) : this.getClickedCircle(mouseX, mouseY);
+        return clicked;
     }
+
     getClickedRectangle(mouseX: number, mouseY: number) {
         const rectX = this.context!.shapeData.coords.x - (this.context!.shapeData.dimensions.width / 2);
         const rectY = this.context!.shapeData.coords.y - (this.context!.shapeData.dimensions.height / 2);

@@ -36,11 +36,10 @@ export class Figure {
 
 
   public transitionTo(state: FigureState<Figure>): void {
-    this.render();
     this._state = state;
     this._state.SetContext(this);
     this._state.setColor();
-    this._state.addEventListener();
+    this.render();
   }
 
   public getState(): FigureState<Figure> {
@@ -84,13 +83,7 @@ export class Figure {
   }
 
   public render(): void {
-    const ctx = (document.getElementById('playField') as HTMLCanvasElement).getContext('2d');
-
-    if (!ctx) {
-      console.error('Canvas context not supported');
-      return;
-    }
-
+    const ctx = Game.getInstance().canvasContext;
     if (this.shape) {
       ctx.fillStyle = this.color || 'black';
 

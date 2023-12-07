@@ -6,5 +6,7 @@ export abstract class FigureState<T> {
 
     public setColor(): void { };
 
-    public addEventListener(): void { };
+    public getClicked(mouseX: number, mouseY: number): boolean {
+        return false;
+    }
 }

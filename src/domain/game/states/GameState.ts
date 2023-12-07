@@ -5,4 +5,6 @@ export abstract class GameState<T> {
     }
 
     public abstract onCreate(): void;
+
+    public onCanvasClick(mouseX: number, mouseY: number): void { };
 }
