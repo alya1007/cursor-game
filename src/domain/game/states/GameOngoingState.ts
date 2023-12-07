@@ -1,4 +1,4 @@
-import { Figure, ShapeData } from "../../figure/Figure";
+import { ShapeData } from "../../figure/Figure";
 import { FigureFactory } from "../../figure/FigureFactory";
 import { AvoidState } from "../../figure/states/AvoidState";
 import { Game } from "../Game";
@@ -15,33 +15,35 @@ export class GameOngoingState extends GameState<Game> {
     private readonly CELL_WIDTH: number = 180;
     private readonly CELL_HEIGHT: number = 200;
 
-    public figures: Figure[] = [];
-
     onCreate(): void {
         const shapeDataArray = this.generateShapeData();
         const figureFactory = new FigureFactory();
 
         for (let i = 0; i < shapeDataArray.length; i += 3) {
-            const changeableFigure = figureFactory.createChangeableFigure(shapeDataArray[i]);
+            const {
+                figure: changeableFigure,
+                timerId,
+            } = figureFactory.createChangeableFigure(shapeDataArray[i]);
+
+            this.context.timerIds.push(timerId);
+
             changeableFigure.render();
-            this.figures.push(changeableFigure);
+            this.context.figures.push(changeableFigure);
 
             const avoidableFigure = figureFactory.createAvoidableFigure(shapeDataArray[i + 1]);
             avoidableFigure.render();
-            this.figures.push(avoidableFigure);
+            this.context.figures.push(avoidableFigure);
 
             const collectableFigure = figureFactory.createCollectableFigure(shapeDataArray[i + 2]);
             collectableFigure.render();
-            this.figures.push(collectableFigure);
+            this.context.figures.push(collectableFigure);
         }
-
-        this.context!.figures = this.figures;
     }
 
 
     public onCanvasClick(mouseX: number, mouseY: number): void {
         let figureClicked = null;
-        for (const figure of this.figures) {
+        for (const figure of this.context.figures) {
             if (figure.shape.tagName === 'rect') {
                 if (
                     mouseX >= figure.shapeData.coords.x &&
@@ -64,8 +66,7 @@ export class GameOngoingState extends GameState<Game> {
         }
         const figureState = figureClicked?.getState();
         if (figureState instanceof AvoidState)
-            debugger;
-        this.context?.transitionTo(new GameOverState(Game.getInstance()));
+            this.context.transitionTo(new GameOverState(Game.getInstance()));
     }
 
 

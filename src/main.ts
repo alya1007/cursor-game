@@ -16,7 +16,7 @@ startButton.addEventListener('click', () => {
   if (playerName !== '') {
     const game = new Game();
     game.setPlayer(playerInstance);
-    game.transitionTo(new GameOngoingState());
+    game.transitionTo(new GameOngoingState(Game.getInstance()));
   } else {
     alert('Please enter a player name.');
   }

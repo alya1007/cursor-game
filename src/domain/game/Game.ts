@@ -5,6 +5,7 @@ import { GameState } from "./states/GameState";
 export class Game {
     private _state: GameState<Game> | null = null;
     public figures: Figure[] = [];
+    public timerIds: number[] = [];
     private static instance: Game;
     public player: Player | null = null;
     public canvasContext: CanvasRenderingContext2D;
