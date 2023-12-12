@@ -3,6 +3,7 @@ import { GameState } from "./GameState";
 
 export class GameOverState extends GameState<Game> {
     onCreate(): void {
+        this.context.stopTimer();
         for (const figure of this.context.figures) {
             figure.shape.remove();
         }

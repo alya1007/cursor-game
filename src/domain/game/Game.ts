@@ -9,12 +9,45 @@ export class Game {
     private static instance: Game;
     public player: Player | null = null;
     public canvasContext: CanvasRenderingContext2D;
+    public gameInterval: number = 0;
+    public timerDisplay: HTMLElement | null = document.getElementById('timeDisplay');
 
     constructor() {
         this.canvasContext = (document.getElementById('playField') as HTMLCanvasElement).getContext('2d')!;
         this.addEventListener();
-        console.log('canvasContext', this.canvasContext)
+        console.log('canvasContext', this.canvasContext);
+
     }
+
+    private displayTimer() {
+        if (this.timerDisplay) {
+            this.timerDisplay.textContent = `Timer: ${this.gameInterval}`;
+        }
+    }
+
+
+    public startTimer() {
+        this.gameInterval = 0;
+        this.updateTimer();
+    }
+
+    private updateTimer() {
+        this.gameInterval += 1;
+        this.displayTimer();
+        this.timerIds.push(window.setTimeout(() => {
+            this.updateTimer();
+        }, 1000));
+    }
+
+    public stopTimer() {
+        this.timerIds.forEach((timerId) => {
+            clearTimeout(timerId);
+        });
+        this.timerIds = [];
+        this.gameInterval = 0;
+        this.displayTimer();
+    }
+
 
     private addEventListener(): void {
         const canvas = document.getElementById('playField') as HTMLCanvasElement;

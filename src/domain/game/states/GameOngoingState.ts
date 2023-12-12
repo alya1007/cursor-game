@@ -38,6 +38,8 @@ export class GameOngoingState extends GameState<Game> {
             collectableFigure.render();
             this.context.figures.push(collectableFigure);
         }
+
+        this.context.startTimer();
     }
 
 
