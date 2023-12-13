@@ -13,7 +13,10 @@ export class Game {
     public timerDisplay: HTMLElement | null = document.getElementById('timeDisplay');
 
     constructor() {
+        const canvas = document.getElementById('playField') as HTMLCanvasElement;
         this.canvasContext = (document.getElementById('playField') as HTMLCanvasElement).getContext('2d')!;
+        this.canvasContext.fillStyle = 'white';
+        this.canvasContext.fillRect(0, 0, canvas.width, canvas.height);
         this.addEventListener();
         console.log('canvasContext', this.canvasContext);
 

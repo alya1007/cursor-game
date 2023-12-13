@@ -3,20 +3,23 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vite + TS</title>
 </head>
 
 <body>
-  <div id="main" class="main">
-    <input type="text" id="playerName" placeholder="Enter player's name" />
-    <h5 id="timeDisplay"></h5>
-    <button id="start">Start</button>
-    <canvas id="playField" width="1100" height="700"></canvas>
-    <div id="display">
-      <div id="score"></div>
-      <div id="info">Press play!</div>
+  <!-- <img src="" alt="background-image" class="background-image"> -->
+  <!-- <div id="main" class="main"> -->
+  <!-- <input type="text" id="playerName" placeholder="Enter player's name" /> -->
+
+  <div class="main">
+    <div class="card">
+      <button id="start">Start</button>
+      <button id="instructions">View instructions</button>
+    </div>
+    <div class="play" style="display:none">
+      <canvas id="playField" width="1000" height="600"></canvas>
+      <h5 id="timeDisplay"></h5>
     </div>
   </div>
   <script type="module" src="/src/main.ts"></script>
